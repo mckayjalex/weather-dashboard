@@ -3,7 +3,11 @@ const weatherSectionEl = document.querySelector('#weather-content');
 const sideBar = document.querySelector('#side-bar');
 
 let searchHistory = [];
+let inputVal = document.querySelector('#input').value;
 
+function init() {
+    getHistory();
+}
 function searchApi(query) {
 
     let initialUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + query + '&units=metric&appid=fe4edba997563cd1cffd343bf3a1a5ff';
@@ -41,10 +45,10 @@ function searchApi(query) {
 }
 
 function printResults(results, name) {
-   
+
     // Clear previous location data
     weatherSectionEl.innerHTML = '';
-    
+
     // Show current day 
     // Adding a card and div elements
     let locationEl = document.createElement('div');
@@ -55,38 +59,38 @@ function printResults(results, name) {
     let locationInfo = document.createElement('div');
     locationInfo.classList.add('card-body');
     locationEl.append(locationHeader, locationInfo);
-    
+
     // Adding location title to the card
     let title = document.createElement('h2');
     title.textContent = name;
     title.classList.add('card-title');
-    
+
     // Adding weather image next to title
     let weatherImage = document.createElement('img');
     let iconcode = results.current.weather[0].icon;
     var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
     weatherImage.setAttribute('src', iconurl);
     locationHeader.append(title, weatherImage);
-    
-   
+
+
     // Adding temp to the card body
     let temp = document.createElement('p');
     temp.textContent = 'Temp: ' + results.current.temp + 'c';
-    
+
     // Adding wind to the card body
     let wind = document.createElement('p');
     wind.textContent = 'Wind: ' + results.current.wind_speed + 'km/h';
-    
+
     // Adding humidity to the card body
     let humidity = document.createElement('p');
     humidity.textContent = 'Humidity: ' + results.current.humidity + '%';
-    
+
     // Adding UV index to the card body
     let index = document.createElement('p');
     index.textContent = 'UV Index: ' + results.current.uvi;
 
     locationInfo.append(temp, wind, humidity, index);
-    
+
     // Adding 5 day foorecast
     let forecast = document.createElement('div');
     forecast.classList.add('d-flex')
@@ -134,7 +138,7 @@ function printResults(results, name) {
 
 function handleSearchResults() {
     let inputVal = document.querySelector('#input').value;
-
+    
     if (!inputVal) {
         console.error('You need a search input value!');
         return;
@@ -143,19 +147,29 @@ function handleSearchResults() {
 }
 
 function setHistory(name) {
+    searchHistory = getHistoryFromStorage();
     searchHistory.push(name);
     localStorage.setItem("location", JSON.stringify(searchHistory));
 }
 
 function getHistoryFromStorage() {
-    return JSON.parse(localStorage.getItem("highscores")) || [];
+    return JSON.parse(localStorage.getItem("location")) || [];
 }
 
-function getHistory(){
-    let location = getHistoryFromStorage();
-
-
+function getHistory() {
+    searchHistory = getHistoryFromStorage();
+    for (let i = 0; i < searchHistory.length; i++) {
+        let createHistory = document.createElement('button');
+        createHistory.classList.add('btn', 'btn-secondary');
+        createHistory.textContent = searchHistory[i];
+        sideBar.append(createHistory);
+    }
+    
 }
 
+init();
 
-searchBtn.addEventListener("click", handleSearchResults);
+searchBtn.addEventListener("click", function () {
+    handleSearchResults();
+    
+})
