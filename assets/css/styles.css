@@ -19,6 +19,7 @@ h1 {
 }
 
 input {
+    padding-left: 10px;
     width: 100%;
     height: 50px;
     border-radius: 5px;
@@ -28,6 +29,7 @@ input {
 
 .page-content {
     padding-top: 10px;
+    margin-right: 20px;
 }
 
 .weather-content {
@@ -38,14 +40,12 @@ input {
     width: 100%;
     height: 50px;
 }
-
+.btn-secondary {
+    margin: 10px;
+}
 .btn-primary:hover {
     opacity: 0.5;
     cursor: pointer;
-}
-
-.side-bar {
-    border-right: solid 2px darkgrey;
 }
 
 .search-container {
@@ -56,17 +56,14 @@ input {
 
 .search-container h2 {
     padding-top: 10px;
-
 }
-
-.city-container {
-    height: 350px;
+.card-header {
+    padding-top: 15px;
 }
-
-.forecast-container {
-    height: 250px;
+.card {
+    margin-bottom: 20px;
 }
-
-.history-container {
-    height: 400px;
+.weekday {
+    width: 20%;
+    margin-right: 15px;
 }

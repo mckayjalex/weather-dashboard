@@ -19,26 +19,19 @@
     <!-- All page content -->
     <section class="page-content d-flex flex-wrap">
         <!-- Side bar container -->
-        <section class="side-bar col-lg-3 d-flex flex-column">
+        <section id="side-bar" class="side-bar col-lg-3 d-flex flex-column">
             <div class="search-container d-flex flex-column align-items-center">
                 <h2>Search for a city:</h2>
                 <input id="input" type="text" placeholder="New York..">
                 <button id="search-button" class="btn btn-primary">Search</button>
             </div>
-            <div class="history-container">
-                <!-- History -->
-            </div>
         </section>
-        <!-- content container -->
-        <section class="weather-content col-lg-9">
-            <div id="location" class="city-container">
-                <!-- City Information -->
-            </div>
-            <div class="forecast-container">
-                <h2>Five Day Forecast:</h2>
-            </div>
+        <!-- Content Container -->
+        <section id="weather-content" class="weather-content col-lg-9">
+            
         </section>
     </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
