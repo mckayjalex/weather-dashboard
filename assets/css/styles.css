@@ -26,7 +26,6 @@ input {
     font-size: 20px;
     margin-bottom: 15px;
 }
-
 .page-content {
     padding-top: 10px;
     margin-right: 20px;
@@ -41,6 +40,7 @@ input {
     height: 50px;
 }
 .btn-secondary {
+    width: 94%;
     margin: 10px;
 }
 .btn-primary:hover {
@@ -60,8 +60,14 @@ input {
 .card-header {
     padding-top: 15px;
 }
+
 .card {
     margin-bottom: 20px;
+} 
+.forecast {
+    background-color: #2759CA;
+    color: white;
+    border-radius: 5px;
 }
 .weekday {
     width: 20%;

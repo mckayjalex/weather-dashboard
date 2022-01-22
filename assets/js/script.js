@@ -1,9 +1,8 @@
-const searchBtn = document.querySelector('#search-button');
-const weatherSectionEl = document.querySelector('#weather-content');
-const sideBar = document.querySelector('#side-bar');
-
-let searchHistory = [];
-let inputVal = document.querySelector('#input').value;
+let searchBtn = document.querySelector('#search-button');
+let weatherSectionEl = document.querySelector('#weather-content');
+let sideBar = document.querySelector('#side-bar');
+let historyContent = document.querySelector('.history');
+let searchHistory;
 
 function init() {
     getHistory();
@@ -11,9 +10,10 @@ function init() {
 function searchApi(query) {
 
     let initialUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + query + '&units=metric&appid=fe4edba997563cd1cffd343bf3a1a5ff';
+    // Variables for retrieving data from first fetch call
     let lon;
     let lat;
-    let cityName;
+    let city;
 
     fetch(initialUrl)
         .then(function (response) {
@@ -25,7 +25,7 @@ function searchApi(query) {
         .then(function (data) {
             lat = data.coord.lat;
             lon = data.coord.lon;
-            cityName = data.name;
+            city = data.name;
 
         })
         .then(function () {
@@ -38,7 +38,7 @@ function searchApi(query) {
                     return response.json();
                 })
                 .then(function (data) {
-                    printResults(data, cityName);
+                    printResults(data, city);
                 })
         })
 
@@ -72,7 +72,6 @@ function printResults(results, name) {
     weatherImage.setAttribute('src', iconurl);
     locationHeader.append(title, weatherImage);
 
-
     // Adding temp to the card body
     let temp = document.createElement('p');
     temp.textContent = 'Temp: ' + results.current.temp + 'c';
@@ -98,47 +97,48 @@ function printResults(results, name) {
 
     setHistory(name);
 
-    // Day one day forecast
+    // Weekly forecast
 
     for (let i = 0; i < 5; i++) {
-        let contain = document.createElement('div')
-        contain.classList.add('weekday', 'card')
-        forecast.append(contain);
-
+        // Adding container for day card
+        let dayContainer = document.createElement('div')
+        dayContainer.classList.add('weekday', 'card')
+        forecast.append(dayContainer);
+        // Adding body to the card
         let day = document.createElement('div');
-        day.classList.add('card-body');
-
+        day.classList.add('card-body', 'forecast');
+        // Adding title to the card
         let date = document.createElement('h3');
         date.textContent = moment().add(i + 1, 'days').format('dddd');
         date.classList.add('card-title');
         day.append(date);
-
+        // Adding weather image to the card
         let image = document.createElement('img');
         let code = results.daily[i].weather[0].icon;
         var iUrl = "http://openweathermap.org/img/w/" + code + ".png";
         image.setAttribute('src', iUrl);
         date.classList.add('card-text');
         day.append(image);
-
+        // Adding temp to the card
         let temp = document.createElement('p');
         temp.textContent = 'Temp: ' + results.daily[i].temp.day + 'c';
         day.append(temp);
-
+        // Adding wind to the card
         let wind = document.createElement('p');
         wind.textContent = 'Wind: ' + results.daily[i].wind_speed + 'km/h';
         day.append(wind);
-
+        // Adding wind to the card
         let humidity = document.createElement('p');
         humidity.textContent = 'Humidity: ' + results.daily[i].humidity + '%';
         day.append(humidity);
-
-        contain.append(day);
+        // Adding day to the card container div
+        dayContainer.append(day);
     }
 }
 
 function handleSearchResults() {
     let inputVal = document.querySelector('#input').value;
-    
+
     if (!inputVal) {
         console.error('You need a search input value!');
         return;
@@ -155,21 +155,23 @@ function setHistory(name) {
 function getHistoryFromStorage() {
     return JSON.parse(localStorage.getItem("location")) || [];
 }
-
+// ISSUES IN THIS FUNCTION!!
 function getHistory() {
+
     searchHistory = getHistoryFromStorage();
+    historyContent.innerHTML = "";  
     for (let i = 0; i < searchHistory.length; i++) {
         let createHistory = document.createElement('button');
-        createHistory.classList.add('btn', 'btn-secondary');
-        createHistory.textContent = searchHistory[i];
-        sideBar.append(createHistory);
+        historyContent.append(createHistory);createHistory.classList.add('btn', 'btn-secondary');
+        createHistory.textContent = searchHistory[i];  
     }
-    
 }
 
 init();
 
 searchBtn.addEventListener("click", function () {
-    handleSearchResults();
+    handleSearchResults();  
+    getHistory();
     
 })
+
