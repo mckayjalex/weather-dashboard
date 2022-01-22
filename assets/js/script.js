@@ -3,7 +3,8 @@ let weatherSectionEl = document.querySelector('#weather-content');
 let sideBar = document.querySelector('#side-bar');
 let historyContent = document.querySelector('.history');
 let createHistory;
-let searchHistory;
+let searchHistory = [];
+
 
 let lon;
 let lat;
@@ -161,13 +162,11 @@ function getHistoryFromStorage() {
 }
 
 function addCity(city) {
-    // if () {
         createHistory = document.createElement('button');
-        historyContent.append(createHistory);
         createHistory.classList.add('btn', 'btn-secondary', 'history-item');
         createHistory.textContent = city;
         createHistory.setAttribute("data-city", city);
-    // }
+        historyContent.append(createHistory);
 }
 // Calling add city function on search history array
 function getHistory() {
@@ -185,5 +184,11 @@ searchBtn.addEventListener("click", function () {
     getHistory();
 })
 
+
+// ON CLICK OF THIS BUTTUN I WISH TO SEARCH API FOR VALUE OF THAT BUTTONS DATASET BUT IT ALWAYS IS SEARCHING THE MOST RECENT DATASET ADD
+historyContent.addEventListener("click", function(event) {
+    event.preventDefault();
+    searchApi(createHistory.dataset.city);
+})
 
 
