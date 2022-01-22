@@ -63,6 +63,7 @@ input {
 
 .card {
     margin-bottom: 20px;
+    border-radius: 5px;
 } 
 .forecast {
     background-color: #2759CA;

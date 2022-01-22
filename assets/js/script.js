@@ -2,7 +2,12 @@ let searchBtn = document.querySelector('#search-button');
 let weatherSectionEl = document.querySelector('#weather-content');
 let sideBar = document.querySelector('#side-bar');
 let historyContent = document.querySelector('.history');
+let createHistory;
 let searchHistory;
+
+let lon;
+let lat;
+let city;
 
 function init() {
     getHistory();
@@ -26,7 +31,6 @@ function searchApi(query) {
             lat = data.coord.lat;
             lon = data.coord.lon;
             city = data.name;
-
         })
         .then(function () {
             let weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&units=metric&appid=fe4edba997563cd1cffd343bf3a1a5ff';
@@ -147,31 +151,39 @@ function handleSearchResults() {
 }
 
 function setHistory(name) {
-    searchHistory = getHistoryFromStorage();
     searchHistory.push(name);
     localStorage.setItem("location", JSON.stringify(searchHistory));
+    addCity(name);
 }
 
 function getHistoryFromStorage() {
     return JSON.parse(localStorage.getItem("location")) || [];
 }
-// ISSUES IN THIS FUNCTION!!
-function getHistory() {
 
+function addCity(city) {
+    // if () {
+        createHistory = document.createElement('button');
+        historyContent.append(createHistory);
+        createHistory.classList.add('btn', 'btn-secondary', 'history-item');
+        createHistory.textContent = city;
+        createHistory.setAttribute("data-city", city);
+    // }
+}
+// Calling add city function on search history array
+function getHistory() {
     searchHistory = getHistoryFromStorage();
-    historyContent.innerHTML = "";  
+    historyContent.innerHTML = "";
     for (let i = 0; i < searchHistory.length; i++) {
-        let createHistory = document.createElement('button');
-        historyContent.append(createHistory);createHistory.classList.add('btn', 'btn-secondary');
-        createHistory.textContent = searchHistory[i];  
+        addCity(searchHistory[i]);
     }
 }
 
 init();
 
 searchBtn.addEventListener("click", function () {
-    handleSearchResults();  
+    handleSearchResults();
     getHistory();
-    
 })
+
+
 
