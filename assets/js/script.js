@@ -2,10 +2,11 @@ let searchBtn = document.querySelector('#search-button');
 let weatherSectionEl = document.querySelector('#weather-content');
 let sideBar = document.querySelector('#side-bar');
 let historyContent = document.querySelector('.history');
+let input = document.querySelector('#input');
 let createHistory;
 let searchHistory = [];
 
-
+// Variables
 let lon;
 let lat;
 let city;
@@ -99,9 +100,7 @@ function printResults(results, name) {
     let forecast = document.createElement('div');
     forecast.classList.add('d-flex')
     weatherSectionEl.append(forecast);
-
     setHistory(name);
-
     // Weekly forecast
 
     for (let i = 0; i < 5; i++) {
@@ -149,12 +148,15 @@ function handleSearchResults() {
         return;
     }
     searchApi(inputVal);
+    // setHistory(inputVal);
 }
-
+// Checks to see if city alreay exists in array and if not will add it
 function setHistory(name) {
-    searchHistory.push(name);
-    localStorage.setItem("location", JSON.stringify(searchHistory));
-    addCity(name);
+    if (searchHistory.includes(name) == false) {
+        searchHistory.push(name);
+        localStorage.setItem("location", JSON.stringify(searchHistory));
+        addCity(name);
+    }
 }
 
 function getHistoryFromStorage() {
@@ -182,13 +184,10 @@ init();
 searchBtn.addEventListener("click", function () {
     handleSearchResults();
     getHistory();
+    input.value = "";
 })
-
-
-// ON CLICK OF THIS BUTTUN I WISH TO SEARCH API FOR VALUE OF THAT BUTTONS DATASET BUT IT ALWAYS IS SEARCHING THE MOST RECENT DATASET ADD
+// Onclick the results for weather will be displayed
 historyContent.addEventListener("click", function(event) {
-    event.preventDefault();
-    searchApi(createHistory.dataset.city);
+    searchApi(event.target.dataset.city);
 })
-
 
