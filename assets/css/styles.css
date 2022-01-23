@@ -40,8 +40,8 @@ input {
     height: 50px;
 }
 .btn-secondary {
-    width: 94%;
-    margin: 10px;
+    width: 100%;
+    margin: 10px 0;
 }
 .btn-primary:hover {
     opacity: 0.5;
@@ -73,4 +73,15 @@ input {
 .weekday {
     width: 20%;
     margin-right: 15px;
+}
+.history {
+    margin: 0 10px;
+}
+@media screen and (max-width: 1400px) {
+    .daily {
+        flex-direction: column;
+    }
+    .weekday {
+        width: 100%;
+    }
 }

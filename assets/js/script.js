@@ -98,7 +98,7 @@ function printResults(results, name) {
 
     // Adding 5 day foorecast
     let forecast = document.createElement('div');
-    forecast.classList.add('d-flex')
+    forecast.classList.add('d-flex', 'daily');
     weatherSectionEl.append(forecast);
     setHistory(name);
     // Weekly forecast
