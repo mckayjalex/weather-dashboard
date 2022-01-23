@@ -16,7 +16,7 @@ function init() {
 }
 function searchApi(query) {
 
-    let initialUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + query + '&units=metric&appid=fe4edba997563cd1cffd343bf3a1a5ff';
+    let initialUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&units=metric&appid=fe4edba997563cd1cffd343bf3a1a5ff';
     // Variables for retrieving data from first fetch call
     let lon;
     let lat;
@@ -74,7 +74,7 @@ function printResults(results, name) {
     // Adding weather image next to title
     let weatherImage = document.createElement('img');
     let iconcode = results.current.weather[0].icon;
-    var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+    var iconurl = "https://openweathermap.org/img/w/" + iconcode + ".png";
     weatherImage.setAttribute('src', iconurl);
     locationHeader.append(title, weatherImage);
 
