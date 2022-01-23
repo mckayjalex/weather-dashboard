@@ -93,6 +93,14 @@ function printResults(results, name) {
     // Adding UV index to the card body
     let index = document.createElement('p');
     index.textContent = 'UV Index: ' + results.current.uvi;
+    if(results.current.uvi < 3) {
+        index.classList.add("text-success", "fw-bold");
+    } else if (results.current.uvi > 3 && results.current.uvi < 6) {
+        index.classList.add("text-warning", "fw-bold");
+    } else {
+        index.classList.add("text-danger", "fw-bold");
+    }
+
 
     locationInfo.append(temp, wind, humidity, index);
 
@@ -164,11 +172,11 @@ function getHistoryFromStorage() {
 }
 
 function addCity(city) {
-        createHistory = document.createElement('button');
-        createHistory.classList.add('btn', 'btn-secondary', 'history-item');
-        createHistory.textContent = city;
-        createHistory.setAttribute("data-city", city);
-        historyContent.append(createHistory);
+    createHistory = document.createElement('button');
+    createHistory.classList.add('btn', 'btn-secondary', 'history-item');
+    createHistory.textContent = city;
+    createHistory.setAttribute("data-city", city);
+    historyContent.append(createHistory);
 }
 // Calling add city function on search history array
 function getHistory() {
@@ -187,7 +195,7 @@ searchBtn.addEventListener("click", function () {
     input.value = "";
 })
 // Onclick the results for weather will be displayed
-historyContent.addEventListener("click", function(event) {
+historyContent.addEventListener("click", function (event) {
     searchApi(event.target.dataset.city);
 })
 
